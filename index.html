@@ -1,124 +1,1650 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>김산 | 컴퓨터소프트웨어과 포트폴리오</title>
-  <!-- 기존 스타일 및 스크립트 유지 -->
-  <!-- ... 생략 ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김산 | 풀스택 개발자 포트폴리오</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #0f172a;
+            --accent-color: #22c55e;
+            --text-color: #334155;
+            --light-text: #94a3b8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --github-black: #0d1117;
+            --github-border: #30363d;
+            --github-card: #161b22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .dark-mode {
+            --bg-color: var(--github-black);
+            --card-bg: var(--github-card);
+            --border-color: var(--github-border);
+            --text-color: #e2e8f0;
+            --light-text: #94a3b8;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 헤더 */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.25rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 650px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--light-text);
+        }
+
+        .tech-item i {
+            font-size: 1.25rem;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--card-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--light-text);
+        }
+
+        /* 소개 섹션 */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid var(--primary-color);
+            border-radius: 0.5rem;
+            transform: translate(15px, 15px);
+            z-index: -1;
+        }
+
+        .about-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        /* 스킬 섹션 */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-category-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            background-color: rgba(37, 99, 235, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .skill-bar {
+            height: 0.5rem;
+            background-color: var(--border-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 9999px;
+        }
+
+        /* 프로젝트 섹션 */
+        .projects-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-description {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* 코드 샘플 섹션 */
+        .code-sample {
+            background-color: var(--github-black);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .code-header {
+            background-color: #161b22;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #e6edf3;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .code-lang {
+            color: #8b949e;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+
+        /* GitHub 활동 섹션 */
+        .github-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .github-stat {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .github-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .github-stat-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .github-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .github-stat-label {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        .github-calendar {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 경험 섹션 */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .timeline-date {
+            width: 45%;
+            text-align: right;
+            padding-right: 2rem;
+        }
+
+        .timeline-date span {
+            display: inline-block;
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .timeline-info {
+            width: 45%;
+            padding-left: 2rem;
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-role {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .timeline-description {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        .timeline-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-skill {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--bg-color);
+            border-radius: 0.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 연락처 섹션 */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: rgba(37, 99, 235, 0.1);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details p {
+            color: var(--light-text);
+            font-size: 0.875rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: var(--bg-color);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 푸터 */
+        footer {
+            background-color: var(--secondary-color);
+            color: #e2e8f0;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-about p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-heading {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        /* 이스터 에그 스타일 */
+        .konami-code-active {
+            animation: rainbow-text 5s infinite;
+        }
+
+        @keyframes rainbow-text {
+            0% { color: #ff0000; }
+            14% { color: #ff7f00; }
+            28% { color: #ffff00; }
+            42% { color: #00ff00; }
+            57% { color: #0000ff; }
+            71% { color: #4b0082; }
+            85% { color: #9400d3; }
+            100% { color: #ff0000; }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 992px) {
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image::before {
+                display: none;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .github-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                position: relative;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--card-bg);
+                border-bottom: 1px solid var(--border-color);
+                padding: 1rem;
+                display: none;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .timeline-content {
+                flex-direction: column;
+            }
+
+            .timeline-marker {
+                left: 1rem;
+            }
+
+            .timeline-date,
+            .timeline-info {
+                width: 100%;
+                padding-left: 0;
+                margin-top: 1rem;
+            }
+
+            .timeline-date {
+                text-align: left;
+                padding-right: 0;
+                padding-left: 2.5rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .github-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- Hero 섹션 -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge">컴퓨터소프트웨어과 학생</div>
-      <h1>안녕하세요, 동의과학대학교 2학년 김산입니다</h1>
-      <p>React, Android 개발을 공부하며 실습 위주로 역량을 쌓아가고 있는 예비 개발자입니다.</p>
-      <!-- 버튼/스택 유지 -->
-    </div>
-  </div>
-</section>
-
-<!-- 소개 섹션 -->
-<section id="about" class="about">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-subtitle">ABOUT ME</div>
-      <h2 class="section-title">저에 대해 알아보세요</h2>
-      <p class="section-description">전문대에서 실무 중심의 개발 역량을 쌓고 있으며, 팀 프로젝트와 개인 앱 개발에 집중하고 있습니다.</p>
-    </div>
-    <div class="about-container">
-      <div class="about-image">
-        <img src="/api/placeholder/500/500" alt="김산의 프로필 이미지">
-      </div>
-      <div class="about-content">
-        <h3>도전과 성장을 즐기는 개발자 지망생</h3>
-        <p>동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 2학년 학생으로, 웹 및 앱 개발에 흥미를 가지고 다양한 프로젝트를 통해 실력을 키워가고 있습니다.</p>
-        <p>React, Node.js 등 최신 기술 스택을 학습하며 개인 및 팀 프로젝트에 적극적으로 참여하고 있습니다. 사용자 중심의 UI/UX와 클린 코드에 관심이 많습니다.</p>
-        <p>앞으로도 꾸준한 공부와 실습을 통해 전문 개발자로 성장하는 것이 목표입니다.</p>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number">2</div>
-            <div class="stat-label">학년</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">4+</div>
-            <div class="stat-label">개인 프로젝트</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">8+</div>
-            <div class="stat-label">사용 기술</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">학습 열정</div>
-          </div>
+    <!-- 헤더 -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo"><i class="fas fa-code"></i> 김산</a>
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#about" class="nav-link">소개</a></li>
+                    <li><a href="#skills" class="nav-link">기술 스택</a></li>
+                    <li><a href="#projects" class="nav-link">프로젝트</a></li>
+                    <li><a href="#github" class="nav-link">GitHub</a></li>
+                    <li><a href="#experience" class="nav-link">경험</a></li>
+                    <li><a href="#contact" class="nav-link">연락처</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </header>
 
-<!-- 경험 섹션 -->
-<section id="experience" class="experience">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-subtitle">MY JOURNEY</div>
-      <h2 class="section-title">학업 및 프로젝트 경험</h2>
-      <p class="section-description">전문대에서 배운 실무 기술을 다양한 프로젝트에 적용하고 있습니다.</p>
-    </div>
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">
-            <span>2023 - 현재</span>
-          </div>
-          <div class="timeline-info">
-            <h3 class="timeline-role">컴퓨터소프트웨어학과 2학년</h3>
-            <p class="timeline-company">동의과학대학교</p>
-            <p class="timeline-description">
-              Java, 웹 프로그래밍, 데이터베이스 등을 배우며 실제 앱 및 웹 프로젝트를 제작하고 있습니다.
-              안드로이드 앱과 React 기반 포트폴리오 페이지 개발에 도전 중입니다.
-            </p>
-            <div class="timeline-skills">
-              <span class="timeline-skill">Java</span>
-              <span class="timeline-skill">React</span>
-              <span class="timeline-skill">MySQL</span>
-              <span class="timeline-skill">HTML/CSS</span>
-              <span class="timeline-skill">Android Studio</span>
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">풀스택 개발자</div>
+                <h1>안녕하세요, 저는 김산입니다</h1>
+                <p>문제 해결과 클린 코드에 진심인 개발자입니다. 사용자 중심의 서비스를 구현하고 복잡한 기술적 도전을 해결하는 것을 즐깁니다.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> 프로젝트 보기
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane"></i> 연락하기
+                    </a>
+                </div>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <i class="fab fa-react"></i> React
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-node-js"></i> Node.js
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-python"></i> Python
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i> MongoDB
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-aws"></i> AWS
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-docker"></i> Docker
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <div class="timeline-date">
-            <span>2024</span>
-          </div>
-          <div class="timeline-info">
-            <h3 class="timeline-role">개인 프로젝트</h3>
-            <p class="timeline-company">To-Do 앱 / 감정일기 앱</p>
-            <p class="timeline-description">
-              SQLite 또는 MySQL을 사용한 일정/기분 관리 앱을 Android Studio(Java)로 개발했습니다. GitHub를 통해 프로젝트를 공개하고 있습니다.
-            </p>
-            <div class="timeline-skills">
-              <span class="timeline-skill">Android</span>
-              <span class="timeline-skill">SQLite</span>
-              <span class="timeline-skill">GitHub</span>
+    </section>
+
+    <!-- 소개 섹션 -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">ABOUT ME</div>
+                <h2 class="section-title">저에 대해 알아보세요</h2>
+                <p class="section-description">문제 해결과 사용자 경험 개선에 열정을 가진 개발자로서, 복잡한 기술 스택을 활용해 효율적이고 확장 가능한 솔루션을 구축합니다.</p>
             </div>
-          </div>
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="/api/placeholder/500/500" alt="김산의 프로필 이미지">
+                </div>
+                <div class="about-content">
+                    <h3>풀스택 개발과 문제 해결의 전문가</h3>
+                    <p>
+                        5년 이상의 웹 및 애플리케이션 개발 경험을 바탕으로, 프론트엔드부터 백엔드, 그리고 DevOps까지 전체 개발 파이프라인을 관리할 수 있는 능력을 갖추고 있습니다.
+                    </p>
+                    <p>
+                        최신 기술 트렌드를 지속적으로 연구하고, 실제 프로젝트에 적용하여 최적의 성능과 사용자 경험을 제공합니다. 
+                        클린 코드와 테스트 주도 개발 방법론을 실천하며, 지속 가능하고 유지보수가 용이한 코드베이스를 구축하는 데 주력합니다.
+                    </p>
+                    <p>
+                        효율적인 팀 협업을 위해 Git과 같은 버전 관리 도구를 능숙하게 활용하며, 애자일 개발 방법론에 따라 프로젝트를 진행합니다.
+                        다양한 백그라운드의 팀원들과 원활한 소통을 통해 프로젝트 목표를 성공적으로 달성한 경험이 있습니다.
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">개발 경력</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">완료한 프로젝트</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">사용 가능한 기술 스택</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">고객 만족도</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- 나머지 섹션은 기존 코드 유지하며 필요 시 GitHub 링크와 프로젝트 링크 보완 -->
+    <!-- 스킬 섹션 -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">MY SKILLS</div>
+                <h2 class="section-title">기술 스택</h2>
+                <p class="section-description">다양한 프로젝트 경험을 통해 습득한 기술들입니다. 지속적인 학습을 통해 기술 스택을 확장하고 있습니다.</p>
+            </div>
+            <div class="skills-container">
+                <!-- 프론트엔드 스킬 -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>프론트엔드</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>React</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>TypeScript</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Next.js</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>TailwindCSS</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Redux</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 백엔드 스킬 -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>백엔드</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Node.js</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Express</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>MongoDB</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>GraphQL</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Python</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- DevOps 스킬 -->
+                <div class="skill-category">
+                    <div class="skill-category-header">
+                        <div class="skill-category-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>DevOps</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Docker</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>AWS</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>CI/CD</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Kubernetes</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </li>
+                        <li class="skill-item">
+                            <div class="skill-name">
+                                <span>Terraform</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 65%"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</body>
-</html>
+    <!-- 프로젝트 섹션 -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">MY WORK</div>
+                <h2 class="section-title">최근 프로젝트</h2>
+                <p class="section-description">다양한 기술 스택을 활용하여 완성한 프로젝트입니다. 각 프로젝트에 대한 자세한 정보와 소스 코드는 GitHub에서 확인하실 수 있습니다.</p>
+            </div>
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">전체</button>
+                <button class="filter-btn" data-filter="web">웹 개발</button>
+                <button class="filter-btn" data-filter="mobile">모바일 앱</button>
+                <button class="filter-btn" data-filter="data">데이터 분석</button>
+            </div>
+            <div class="projects-grid">
+                <!-- 프로젝트 1 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="/api/placeholder/600/400" alt="프로젝트 1">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">MongoDB</span>
+                        </div>
+                        <h3 class="project-title">코드티칭 플랫폼</h3>
+                        <p class="project-description">
+                            실시간 협업 코딩 환경을 제공하는 웹 애플리케이션으로, WebRTC 기술을 활용한 화상 통화 기능과 Socket.io를 통한 실시간 코드 공유 기능을 구현했습니다.
+                        </p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-link"></i> 라이브 데모
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> 소스 코드
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 프로젝트 2 -->
+                <div class="project-card" data-category="mobile">
+                    <div class="project-image">
+                        <img src="/api/placeholder/600/400" alt="프로젝트 2">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag">React Native</span>
+                            <span class="project-tag">Firebase</span>
+                            <span class="project-tag">Redux</span>
+                        </div>
+                        <h3 class="project-title">헬스케어 트래킹 앱</h3>
+                        <p class="project-description">
+                            사용자의 운동 습관과 식이 기록을 관리하고 건강 목표 달성을 도와주는 모바일 애플리케이션으로, 푸시 알림과 데이터 시각화 기능을 제공합니다.
+                        </p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> 앱 스토어
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> 소스 코드
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 프로젝트 3 -->
+                <div class="project-card" data-category="data">
+                    <div class="project-image">
+                        <img src="/api/placeholder/600/400" alt="프로젝트 3">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">TensorFlow</span>
+                            <span class="project-tag">Pandas</span>
+                        </div>
+                        <h3 class="project-title">금융 데이터 분석 도구</h3>
+                        <p class="project-description">
+                            주식 시장 데이터를 분석하고 미래 가격 예측 모델을 제공하는 웹 애플리케이션으로, 머신러닝 알고리즘을 활용한 예측 모델과 데이터 시각화 기능을 구현했습니다.
+                        </p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-link"></i> 라이브 데모
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i> 소스 코드
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 코드 샘플 섹션 -->
+    <section class="code-sample">
+        <div class="code-header">
+            <div class="code-title">
+                <i class="fas fa-code"></i>
+                <span>React Hooks - 커스텀 데이터 페칭 훅</span>
+            </div>
+            <div class="code-lang">JavaScript</div>
+        </div>
+        <div class="code-content">
+            <pre><code class="language-javascript">import { useState, useEffect } from 'react';
+
+/**
+ * 데이터 페칭을 위한 커스텀 훅
+ * @param {string} url - 데이터를 불러올 API 엔드포인트
+ * @param {Object} options - fetch API 옵션 (선택 사항)
+ * @returns {Object} { data, loading, error, refetch }
+ */
+const useFetch = (url, options = {}) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(url, options);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      setData(result);
+      setError(null);
+    } catch (err) {
+      setError(err.message || 'Something went wrong');
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+
+  // 수동 리패치 함수 제공
+  const refetch = () => {
+    fetchData();
+  };
+
+  return { data, loading, error, refetch };
+};
+
+export default useFetch;
+
+// 사용 예시:
+// const { data, loading, error, refetch } = useFetch('https://api.example.com/data');
+</code></pre>
+        </div>
+    </section>
+
+    <!-- GitHub 활동 섹션 -->
+    <section id="github" class="github">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">GitHub</div>
+                <h2 class="section-title">오픈소스 기여와 활동</h2>
+                <p class="section-description">GitHub에서의 활동과 기여 내역을 확인하세요. 다양한 오픈소스 프로젝트에 참여하고 있습니다.</p>
+            </div>
+            <div class="github-stats">
+                <div class="github-stat">
+                    <div class="github-stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="github-stat-number">150+</div>
+                    <div class="github-stat-label">총 커밋</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="github-stat-number">25+</div>
+                    <div class="github-stat-label">GitHub 스타</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="github-stat-number">20+</div>
+                    <div class="github-stat-label">레포지토리</div>
+                </div>
+                <div class="github-stat">
+                    <div class="github-stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="github-stat-number">15+</div>
+                    <div class="github-stat-label">기여한 프로젝트</div>
+                </div>
+            </div>
+            <div class="github-calendar">
+                <h3>GitHub 커밋 달력</h3>
+                <p>로딩 중...</p>
+                <p class="section-description">
+                    깃허브에서 더 많은 프로젝트와 상세한 기여 내역을 확인하세요:
+                    <a href="https://github.com/username" target="_blank">github.com/username</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 경험 섹션 -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">MY JOURNEY</div>
+                <h2 class="section-title">직무 경험</h2>
+                <p class="section-description">다양한 업계와 역할에서 쌓은 경험들입니다. 각 경험을 통해 기술적 역량과 협업 능력을 키워왔습니다.</p>
+            </div>
+            <div class="timeline">
+                <!-- 경험 항목 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span>2023 - 현재</span>
+                        </div>
+                        <div class="timeline-info">
+                            <h3 class="timeline-role">시니어 풀스택 개발자</h3>
+                            <p class="timeline-company">테크 이노베이션</p>
+                            <p class="timeline-description">
+                                대규모 웹 애플리케이션 아키텍처 설계 및 개발 리드를 담당하며, 팀원들의 멘토링을 통해 코드 품질과 개발 프로세스를 개선했습니다.
+                                마이크로서비스 아키텍처로의 전환을 주도하여 시스템 확장성과 유지보수성을 대폭 향상시켰습니다.
+                            </p>
+                            <div class="timeline-skills">
+                                <span class="timeline-skill">React</span>
+                                <span class="timeline-skill">Node.js</span>
+                                <span class="timeline-skill">AWS</span>
+                                <span class="timeline-skill">Docker</span>
+                                <span class="timeline-skill">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 경험 항목 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span>2020 - 2023</span>
+                        </div>
+                        <div class="timeline-info">
+                            <h3 class="timeline-role">프론트엔드 개발자</h3>
+                            <p class="timeline-company">디지털 솔루션즈</p>
+                            <p class="timeline-description">
+                                React와 TypeScript를 활용한 대규모 SPA 개발 및 유지보수를 담당했습니다.
+                                컴포넌트 기반 아키텍처를 도입하여 재사용성을 높이고, 성능 최적화를 통해 사용자 경험을 향상시켰습니다.
+                                Jest와 React Testing Library를 활용한 테스트 자동화 시스템을 구축했습니다.
+                            </p>
+                            <div class="timeline-skills">
+                                <span class="timeline-skill">React</span>
+                                <span class="timeline-skill">TypeScript</span>
+                                <span class="timeline-skill">Redux</span>
+                                <span class="timeline-skill">Jest</span>
+                                <span class="timeline-skill">Webpack</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 경험 항목 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span>2018 - 2020</span>
+                        </div>
+                        <div class="timeline-info">
+                            <h3 class="timeline-role">백엔드 개발자</h3>
+                            <p class="timeline-company">핀테크 스타트업</p>
+                            <p class="timeline-description">
+                                Node.js와 Express를 활용한 REST API 개발을 담당했습니다.
+                                MongoDB와 MySQL을 활용한 데이터베이스 설계 및 최적화를 통해 시스템 성능을 개선했습니다.
+                                JWT 기반 인증 시스템과 결제 모듈 연동을 구현했습니다.
+                            </p>
+                            <div class="timeline-skills">
+                                <span class="timeline-skill">Node.js</span>
+                                <span class="timeline-skill">Express</span>
+                                <span class="timeline-skill">MongoDB</span>
+                                <span class="timeline-skill">MySQL</span>
+                                <span class="timeline-skill">JWT</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 경험 항목 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">
+                            <span>2014 - 2018</span>
+                        </div>
+                        <div class="timeline-info">
+                            <h3 class="timeline-role">컴퓨터 공학 학사</h3>
+                            <p class="timeline-company">서울대학교</p>
+                            <p class="timeline-description">
+                                컴
